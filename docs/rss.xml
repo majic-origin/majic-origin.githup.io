@@ -1,5 +1,60 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Majic-Origin_Blog</title><link>https://majic-origin.github.io/majic-origin.githup.io</link><description> lots of practices </description><copyright>Majic-Origin_Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://majic-origin.github.io/majic-origin.githup.io</link></image><lastBuildDate>Sat, 23 May 2026 06:18:29 +0000</lastBuildDate><managingEditor>Majic-Origin_Blog</managingEditor><ttl>60</ttl><webMaster>Majic-Origin_Blog</webMaster><item><title>java实现 文本文件复制</title><link>https://majic-origin.github.io/majic-origin.githup.io/post/java-shi-xian-%20-wen-ben-wen-jian-fu-zhi.html</link><description>### 一、文本文件复制（字符缓冲流实现）
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Majic-Origin_Blog</title><link>https://majic-origin.github.io/majic-origin.githup.io</link><description> lots of practices </description><copyright>Majic-Origin_Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://majic-origin.github.io/majic-origin.githup.io</link></image><lastBuildDate>Sat, 06 Jun 2026 04:06:50 +0000</lastBuildDate><managingEditor>Majic-Origin_Blog</managingEditor><ttl>60</ttl><webMaster>Majic-Origin_Blog</webMaster><item><title>Java 两种创建线程方式：继承 Thread 类 VS 实现 Runnable 接口详解</title><link>https://majic-origin.github.io/majic-origin.githup.io/post/Java%20-liang-zhong-chuang-jian-xian-cheng-fang-shi-%EF%BC%9A-ji-cheng-%20Thread%20-lei-%20VS%20-shi-xian-%20Runnable%20-jie-kou-xiang-jie.html</link><description>### 一、两种实现代码示例
+**1. 方式 1：继承 Thread 子类创建线程**
+```
+// 1.自定义类继承Thread类
+class MyThread extends Thread{
+    // 重写run()：线程执行任务方法
+    @Override
+    public void run() {
+        for(int i=0;i&lt;5;i++){
+            System.out.println('继承Thread线程执行：'+i);
+        }
+    }
+}
+
+public class TestThread{
+    public static void main(String[] args) {
+        // 创建线程对象 + 调用start()开启线程
+        MyThread t1 = new MyThread();
+        t1.start();
+    }
+}
+
+```
+
+2. 方式 2：实现 Runnable 接口，传入 Thread 构造器创建线程
+
+
+```
+
+// 1.自定义类实现Runnable接口
+class MyRunnable implements Runnable{
+    @Override
+    public void run() {
+        for(int i=0;i&lt;5;i++){
+            System.out.println('实现Runnable线程执行：'+i);
+        }
+    }
+}
+
+public class TestRunnable{
+    public static void main(String[] args) {
+        // 任务对象
+        MyRunnable task = new MyRunnable();
+        // 把任务传入Thread，创建线程
+        Thread t1 = new Thread(task);
+        t1.start();
+    }
+}
+
+```
+
+### **二、核心五大区别**
+
+1. 继承限制不同（最关键）
+继承 Thread：Java 单继承局限
+已经继承Thread，无法再继承其他父类，扩展性差。</description><guid isPermaLink="true">https://majic-origin.github.io/majic-origin.githup.io/post/Java%20-liang-zhong-chuang-jian-xian-cheng-fang-shi-%EF%BC%9A-ji-cheng-%20Thread%20-lei-%20VS%20-shi-xian-%20Runnable%20-jie-kou-xiang-jie.html</guid><pubDate>Sat, 06 Jun 2026 04:06:24 +0000</pubDate></item><item><title>java实现 文本文件复制</title><link>https://majic-origin.github.io/majic-origin.githup.io/post/java-shi-xian-%20-wen-ben-wen-jian-fu-zhi.html</link><description>### 一、文本文件复制（字符缓冲流实现）
 字符缓冲流（BufferedReader / BufferedWriter）是文本文件复制最常用的方式，它自带缓冲区，效率高，还支持按行读写，非常方便。</description><guid isPermaLink="true">https://majic-origin.github.io/majic-origin.githup.io/post/java-shi-xian-%20-wen-ben-wen-jian-fu-zhi.html</guid><pubDate>Sat, 23 May 2026 06:18:03 +0000</pubDate></item><item><title>Java 反射</title><link>https://majic-origin.github.io/majic-origin.githup.io/post/Java%20-fan-she.html</link><description>### 一、用处 &amp; 优势
 💡 用处
 
