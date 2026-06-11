@@ -104,70 +104,73 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>灵活扩展：想加新的方法，只要实现接口就行，不用改计时逻辑；</li>
 <li>避免重复：不用每个方法都写 System.currentTimeMillis()。</li>
 </ol>
-<p>`<br>
-//<br>
-package time;</p>
-<p>public class TimeCostDemo {</p>
-<pre class="notranslate"><code class="notranslate">// 1. 定义一个通用接口：代表一段要执行的任务
-public interface Task {
-    void execute();
-}
+<pre class="notranslate"><code class="notranslate">
+//
+package time;
 
-// 2. 通用计时工具方法
-public static void runWithTime(Task task) {
-    long start = System.currentTimeMillis();
-    // 执行传入的任务
-    task.execute();
-    long end = System.currentTimeMillis();
-    System.out.println("方法执行耗时：" + (end - start) + " 毫秒");
-}
+public class TimeCostDemo {
 
-// 示例方法：比如你的筛法求素数
-public static void primeSieveDemo() {
-    int max = 1000000;
-    boolean[] isPrime = new boolean[max + 1];
-    for (int i = 2; i &lt;= max; i++) {
-        isPrime[i] = true;
+    // 1. 定义一个通用接口：代表一段要执行的任务
+    public interface Task {
+        void execute();
     }
-    for (int i = 2; i * i &lt;= max; i++) {
-        if (isPrime[i]) {
-            for (int j = i * i; j &lt;= max; j += i) {
-                isPrime[j] = false;
+
+    // 2. 通用计时工具方法
+    public static void runWithTime(Task task) {
+        long start = System.currentTimeMillis();
+        // 执行传入的任务
+        task.execute();
+        long end = System.currentTimeMillis();
+        System.out.println("方法执行耗时：" + (end - start) + " 毫秒");
+    }
+
+    // 示例方法：比如你的筛法求素数
+    public static void primeSieveDemo() {
+        int max = 1000000;
+        boolean[] isPrime = new boolean[max + 1];
+        for (int i = 2; i &lt;= max; i++) {
+            isPrime[i] = true;
+        }
+        for (int i = 2; i * i &lt;= max; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j &lt;= max; j += i) {
+                    isPrime[j] = false;
+                }
             }
         }
-    }
-    int count = 0;
-    for (int i = 2; i &lt;= max; i++) {
-        if (isPrime[i]) count++;
-    }
-    System.out.println("100万以内素数个数：" + count);
-}
-
-public static void main(String[] args) {
-    // 3. 用匿名内部类实现 Task 接口，把方法传给计时工具
-    runWithTime(new Task() {
-        @Override
-        public void execute() {
-            primeSieveDemo(); // 要计时的业务方法
+        int count = 0;
+        for (int i = 2; i &lt;= max; i++) {
+            if (isPrime[i]) count++;
         }
-    });
+        System.out.println("100万以内素数个数：" + count);
+    }
 
-    // 也可以直接写别的方法
-    runWithTime(new Task() {
-        @Override
-        public void execute() {
-            // 随便写个循环，看看耗时
-            long sum = 0;
-            for (int i = 0; i &lt; 100000000; i++) {
-                sum += i;
+    public static void main(String[] args) {
+        // 3. 用匿名内部类实现 Task 接口，把方法传给计时工具
+        runWithTime(new Task() {
+            @Override
+            public void execute() {
+                primeSieveDemo(); // 要计时的业务方法
             }
-            System.out.println("循环计算完成，sum=" + sum);
-        }
-    });
+        });
+
+        // 也可以直接写别的方法
+        runWithTime(new Task() {
+            @Override
+            public void execute() {
+                // 随便写个循环，看看耗时
+                long sum = 0;
+                for (int i = 0; i &lt; 100000000; i++) {
+                    sum += i;
+                }
+                System.out.println("循环计算完成，sum=" + sum);
+            }
+        });
+    }
 }
-</code></pre>
-<p>}</p>
-<p>`</p></div>
+ 
+
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
