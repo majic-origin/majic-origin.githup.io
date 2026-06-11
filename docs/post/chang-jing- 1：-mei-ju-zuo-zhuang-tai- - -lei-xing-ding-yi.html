@@ -98,63 +98,66 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>统一管理：所有状态全写在一个枚举里，改一处全局生效。</li>
 <li>自带扩展：可以加属性、加方法，实现根据编码反向查找状态。</li>
 </ol>
-<p>`<br>
-public class OrderStatusDemo {</p>
-<pre class="notranslate"><code class="notranslate">// 订单状态枚举
-public enum OrderStatus {
-    // 枚举常量：编码 + 描述
-    WAIT_PAY(1, "待支付"),
-    PAID(2, "已支付"),
-    DELIVERED(3, "已发货"),
-    FINISHED(4, "已完成"),
-    CANCEL(5, "已取消");
+<pre class="notranslate"><code class="notranslate">
+public class OrderStatusDemo {
 
-    private final int code;
-    private final String desc;
+    // 订单状态枚举
+    public enum OrderStatus {
+        // 枚举常量：编码 + 描述
+        WAIT_PAY(1, "待支付"),
+        PAID(2, "已支付"),
+        DELIVERED(3, "已发货"),
+        FINISHED(4, "已完成"),
+        CANCEL(5, "已取消");
 
-    // 枚举私有构造方法
-    OrderStatus(int code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
+        private final int code;
+        private final String desc;
 
-    // getter 方法
-    public int getCode() {
-        return code;
-    }
-    public String getDesc() {
-        return desc;
-    }
-
-    // 根据编码反向匹配枚举
-    public static OrderStatus getByCode(int code) {
-        for (OrderStatus status : OrderStatus.values()) {
-            if (status.getCode() == code) {
-                return status;
-            }
+        // 枚举私有构造方法
+        OrderStatus(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
         }
-        return null;
+
+        // getter 方法
+        public int getCode() {
+            return code;
+        }
+        public String getDesc() {
+            return desc;
+        }
+
+        // 根据编码反向匹配枚举
+        public static OrderStatus getByCode(int code) {
+            for (OrderStatus status : OrderStatus.values()) {
+                if (status.getCode() == code) {
+                    return status;
+                }
+            }
+            return null;
+        }
     }
-}
 
-// 测试主方法
-public static void main(String[] args) {
-    // 1. 直接使用枚举，不用魔法数字 1、2、3
-    OrderStatus status1 = OrderStatus.PAID;
-    System.out.println("当前状态：" + status1.getCode() + " -&gt; " + status1.getDesc());
-
-    // 2. 根据数字编码反向查询状态
-    OrderStatus status2 = OrderStatus.getByCode(3);
-    System.out.println("编码3对应状态：" + status2.getDesc());
-
-    // 3. 遍历所有订单状态
-    System.out.println("\n所有订单状态列表：");
-    for (OrderStatus s : OrderStatus.values()) {
-        System.out.println(s.getCode() + " : " + s.getDesc());
-    }
-}
 </code></pre>
-<p>}`</p></div>
+<pre class="notranslate"><code class="notranslate">    // 测试主方法
+    public static void main(String[] args) {
+        // 1. 直接使用枚举，不用魔法数字 1、2、3
+        OrderStatus status1 = OrderStatus.PAID;
+        System.out.println("当前状态：" + status1.getCode() + " -&gt; " + status1.getDesc());
+
+        // 2. 根据数字编码反向查询状态
+        OrderStatus status2 = OrderStatus.getByCode(3);
+        System.out.println("编码3对应状态：" + status2.getDesc());
+
+        // 3. 遍历所有订单状态
+        System.out.println("\n所有订单状态列表：");
+        for (OrderStatus s : OrderStatus.values()) {
+            System.out.println(s.getCode() + " : " + s.getDesc());
+        }
+    }
+}
+
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
