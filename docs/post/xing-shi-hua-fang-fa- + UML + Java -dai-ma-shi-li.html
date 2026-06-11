@@ -101,68 +101,72 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 后置条件：balance' = balance - amount（balance'为取款后余额）<br>
 不变量：balance &gt;= 0（账户余额永远非负）</li>
 </ol>
-<p>`public class BankAccount {<br>
-private double balance;</p>
-<pre class="notranslate"><code class="notranslate">public BankAccount(double initialBalance) {
-    // 初始化时保证余额非负
-    if (initialBalance &lt; 0) {
-        throw new IllegalArgumentException("初始余额不能为负");
-    }
-    this.balance = initialBalance;
-}
+<pre class="notranslate"><code class="notranslate">`public class BankAccount {
+    private double balance;
 
-/**
- * 取款方法
- * @param amount 取款金额
- * @throws IllegalArgumentException 违反形式化约束时抛出异常
- */
-public void withdraw(double amount) {
-    // 对应前置条件：amount &gt; 0
-    if (amount &lt;= 0) {
-        throw new IllegalArgumentException("取款金额必须大于0");
-    }
-    // 对应前置条件：balance &gt;= amount
-    if (balance &lt; amount) {
-        throw new IllegalArgumentException("余额不足，无法取款");
+    public BankAccount(double initialBalance) {
+        // 初始化时保证余额非负
+        if (initialBalance &lt; 0) {
+            throw new IllegalArgumentException("初始余额不能为负");
+        }
+        this.balance = initialBalance;
     }
 
-    // 执行取款操作
-    balance -= amount;
+    /**
+     * 取款方法
+     * @param amount 取款金额
+     * @throws IllegalArgumentException 违反形式化约束时抛出异常
+     */
+    public void withdraw(double amount) {
+        // 对应前置条件：amount &gt; 0
+        if (amount &lt;= 0) {
+            throw new IllegalArgumentException("取款金额必须大于0");
+        }
+        // 对应前置条件：balance &gt;= amount
+        if (balance &lt; amount) {
+            throw new IllegalArgumentException("余额不足，无法取款");
+        }
 
-    // 验证不变量：balance &gt;= 0（形式化验证的代码落地）
-    if (balance &lt; 0) {
-        throw new IllegalStateException("账户余额异常，出现负数");
-    }
-}
+        // 执行取款操作
+        balance -= amount;
 
-public double getBalance() {
-    return balance;
-}
-
-public static void main(String[] args) {
-    BankAccount account = new BankAccount(1000);
-    System.out.println("初始余额：" + account.getBalance());
-
-    // 合法取款
-    account.withdraw(300);
-    System.out.println("取款300后余额：" + account.getBalance());
-
-    // 非法取款（金额为负）
-    try {
-        account.withdraw(-100);
-    } catch (IllegalArgumentException e) {
-        System.out.println("取款失败：" + e.getMessage());
+        // 验证不变量：balance &gt;= 0（形式化验证的代码落地）
+        if (balance &lt; 0) {
+            throw new IllegalStateException("账户余额异常，出现负数");
+        }
     }
 
-    // 非法取款（余额不足）
-    try {
-        account.withdraw(800);
-    } catch (IllegalArgumentException e) {
-        System.out.println("取款失败：" + e.getMessage());
+    public double getBalance() {
+        return balance;
     }
-}
+
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(1000);
+        System.out.println("初始余额：" + account.getBalance());
+
+        // 合法取款
+        account.withdraw(300);
+        System.out.println("取款300后余额：" + account.getBalance());
+
+        // 非法取款（金额为负）
+        try {
+            account.withdraw(-100);
+        } catch (IllegalArgumentException e) {
+            System.out.println("取款失败：" + e.getMessage());
+        }
+
+        // 非法取款（余额不足）
+        try {
+            account.withdraw(800);
+        } catch (IllegalArgumentException e) {
+            System.out.println("取款失败：" + e.getMessage());
+        }
+    }
+}`
+
+
+
 </code></pre>
-<p>}`</p>
 <h3>三、《大象 ——thinking in UML》核心内容 + UML 转 Java 代码示例</h3>
 <p>《大象 ——thinking in UML》是 UML（统一建模语言）的经典入门书，核心是教读者用 UML 图做面向对象系统建模，再把模型落地为代码。</p>
 <ol>
@@ -181,98 +185,104 @@ UML 类图逻辑（文字描述）<br>
 <blockquote>
 </blockquote>
 <blockquote>
-<p>`import java.util.List;<br>
-import java.util.ArrayList;</p>
+<p>`</p>
 </blockquote>
-<p>// Student类（对应UML类图的Student类）<br>
-public class Student {<br>
-private String id;<br>
-private String name;<br>
-private List courses; // 多对多关联</p>
-<pre class="notranslate"><code class="notranslate">public Student(String id, String name) {
-    this.id = id;
-    this.name = name;
-    this.courses = new ArrayList&lt;&gt;();
-}
+<pre class="notranslate"><code class="notranslate">import java.util.List;
+import java.util.ArrayList;
 
-// 对应UML方法：attendCourse()
-public void attendCourse(Course course) {
-    if (!courses.contains(course)) {
-        courses.add(course);
-        course.addStudent(this); // 维护双向关联
+// Student类（对应UML类图的Student类）
+public class Student {
+    private String id;
+    private String name;
+    private List&lt;Course&gt; courses; // 多对多关联
+
+    public Student(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.courses = new ArrayList&lt;&gt;();
+    }
+
+    // 对应UML方法：attendCourse()
+    public void attendCourse(Course course) {
+        if (!courses.contains(course)) {
+            courses.add(course);
+            course.addStudent(this); // 维护双向关联
+        }
+    }
+
+    // 对应UML方法：study()
+    public void study() {
+        System.out.println("学生 " + name + " 正在学习");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List&lt;Course&gt; getCourses() {
+        return courses;
     }
 }
 
-// 对应UML方法：study()
-public void study() {
-    System.out.println("学生 " + name + " 正在学习");
-}
-
-public String getName() {
-    return name;
-}
-
-public List&lt;Course&gt; getCourses() {
-    return courses;
-}
 </code></pre>
-<p>}</p>
-<p>// Course类（对应UML类图的Course类）</p>
-<p>// 测试类<br>
-`</p>
-<p>`import java.util.ArrayList;<br>
-import java.util.List;</p>
-<p>public class Course {<br>
-private String courseId;<br>
-private String courseName;<br>
-private List students; // 多对多关联</p>
-<pre class="notranslate"><code class="notranslate">public Course(String courseId, String courseName) {
-    this.courseId = courseId;
-    this.courseName = courseName;
-    this.students = new ArrayList&lt;&gt;();
-}
+<p>// Course类（对应UML类图的Course类）<br>
+// 测试类</p>
+<pre class="notranslate"><code class="notranslate">import java.util.ArrayList;
+import java.util.List;
 
-// 维护双向关联
-public void addStudent(Student student) {
-    if (!students.contains(student)) {
-        students.add(student);
+public class Course {
+    private String courseId;
+    private String courseName;
+    private List&lt;Student&gt; students; // 多对多关联
+
+    public Course(String courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.students = new ArrayList&lt;&gt;();
+    }
+
+    // 维护双向关联
+    public void addStudent(Student student) {
+        if (!students.contains(student)) {
+            students.add(student);
+        }
+    }
+
+    // 对应UML方法：getInfo()
+    public String getInfo() {
+        return "课程：" + courseName + "（编号：" + courseId + "）";
+    }
+
+    public List&lt;Student&gt; getStudents() {
+        return students;
     }
 }
 
-// 对应UML方法：getInfo()
-public String getInfo() {
-    return "课程：" + courseName + "（编号：" + courseId + "）";
-}
-
-public List&lt;Student&gt; getStudents() {
-    return students;
-}
 </code></pre>
-<p>}<br>
-`</p>
-<p>`public class UmlDemo {<br>
-public static void main(String[] args) {<br>
-Student stu1 = new Student("S001", "张三");<br>
-Student stu2 = new Student("S002", "李四");</p>
-<pre class="notranslate"><code class="notranslate">    Course course1 = new Course("C001", "Java编程");
-    Course course2 = new Course("C002", "UML建模");
+<pre class="notranslate"><code class="notranslate">public class UmlDemo {
+    public static void main(String[] args) {
+        Student stu1 = new Student("S001", "张三");
+        Student stu2 = new Student("S002", "李四");
 
-    // 学生选课
-    stu1.attendCourse(course1);
-    stu1.attendCourse(course2);
-    stu2.attendCourse(course1);
+        Course course1 = new Course("C001", "Java编程");
+        Course course2 = new Course("C002", "UML建模");
 
-    // 测试方法
-    System.out.println(course1.getInfo() + " 选课学生：");
-    for (Student s : course1.getStudents()) {
-        System.out.println("- " + s.getName());
+        // 学生选课
+        stu1.attendCourse(course1);
+        stu1.attendCourse(course2);
+        stu2.attendCourse(course1);
+
+        // 测试方法
+        System.out.println(course1.getInfo() + " 选课学生：");
+        for (Student s : course1.getStudents()) {
+            System.out.println("- " + s.getName());
+        }
+
+        stu1.study();
     }
-
-    stu1.study();
 }
 </code></pre>
-<p>}`<br>
-<strong>### 最终总结</strong><br>
+<p><strong>### 最终总结</strong><br>
 形式化方法：基于数学逻辑的系统验证方法，核心是用严格约束保障系统正确性，可通过 Java 代码落地业务逻辑校验。<br>
 《大象 ——thinking in UML》：UML 建模经典书籍，核心是用 UML 图做面向对象建模，再将模型转化为 Java 等代码实现。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>

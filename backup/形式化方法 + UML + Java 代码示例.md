@@ -15,6 +15,7 @@
 
 
 
+```
 `public class BankAccount {
     private double balance;
 
@@ -80,6 +81,7 @@
 
 
 
+```
 ### 三、《大象 ——thinking in UML》核心内容 + UML 转 Java 代码示例
 《大象 ——thinking in UML》是 UML（统一建模语言）的经典入门书，核心是教读者用 UML 图做面向对象系统建模，再把模型落地为代码。
 1. 核心 UML 图（书中重点）
@@ -96,7 +98,10 @@ UML 类图逻辑（文字描述）
 
 > 
 
-> `import java.util.List;
+> `
+
+```
+import java.util.List;
 import java.util.ArrayList;
 
 // Student类（对应UML类图的Student类）
@@ -133,12 +138,12 @@ public class Student {
     }
 }
 
+```
 // Course类（对应UML类图的Course类）
-
 // 测试类
-`
 
-`import java.util.ArrayList;
+```
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -168,9 +173,11 @@ public class Course {
         return students;
     }
 }
-`
 
-`public class UmlDemo {
+```
+
+```
+public class UmlDemo {
     public static void main(String[] args) {
         Student stu1 = new Student("S001", "张三");
         Student stu2 = new Student("S002", "李四");
@@ -191,7 +198,8 @@ public class Course {
 
         stu1.study();
     }
-}`
+}
+```
 **### 最终总结**
 形式化方法：基于数学逻辑的系统验证方法，核心是用严格约束保障系统正确性，可通过 Java 代码落地业务逻辑校验。
 《大象 ——thinking in UML》：UML 建模经典书籍，核心是用 UML 图做面向对象建模，再将模型转化为 Java 等代码实现。
