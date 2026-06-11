@@ -108,57 +108,60 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>类型安全：只能用定义好的返回码，不会随便乱写数字出错；</li>
 <li>结构规整：状态码 + 提示语绑定在一起，业务语义清晰。</li>
 </ol>
-<p>`<br>
-public class ResultCodeDemo {</p>
-<pre class="notranslate"><code class="notranslate">/**
- * 场景3：后端全局统一返回码枚举
- * 用途：接口固定状态码、提示信息统一规范
- */
-public enum ResultCode {
-    // 1. 枚举常量：状态码 + 提示信息
-    SUCCESS(200, "请求成功"),
-    PARAM_ERROR(400, "参数非法"),
-    UNAUTHORIZED(401, "未登录或权限不足"),
-    NOT_FOUND(404, "资源不存在"),
-    SERVER_ERROR(500, "服务器内部异常");
+<pre class="notranslate"><code class="notranslate">
+public class ResultCodeDemo {
 
-    // 2. 成员变量：状态码、提示文案
-    private final int code;
-    private final String msg;
+    /**
+     * 场景3：后端全局统一返回码枚举
+     * 用途：接口固定状态码、提示信息统一规范
+     */
+    public enum ResultCode {
+        // 1. 枚举常量：状态码 + 提示信息
+        SUCCESS(200, "请求成功"),
+        PARAM_ERROR(400, "参数非法"),
+        UNAUTHORIZED(401, "未登录或权限不足"),
+        NOT_FOUND(404, "资源不存在"),
+        SERVER_ERROR(500, "服务器内部异常");
 
-    // 3. 枚举私有构造方法：给常量赋值
-    ResultCode(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
+        // 2. 成员变量：状态码、提示文案
+        private final int code;
+        private final String msg;
+
+        // 3. 枚举私有构造方法：给常量赋值
+        ResultCode(int code, String msg) {
+            this.code = code;
+            this.msg = msg;
+        }
+
+        // 4. getter 方法：外部获取属性
+        public int getCode() {
+            return code;
+        }
+        public String getMsg() {
+            return msg;
+        }
     }
 
-    // 4. getter 方法：外部获取属性
-    public int getCode() {
-        return code;
-    }
-    public String getMsg() {
-        return msg;
-    }
-}
-
-// 测试 main 方法
-public static void main(String[] args) {
-    // 使用1：直接拿成功码
-    System.out.println("状态码：" + ResultCode.SUCCESS.getCode());
-    System.out.println("提示信息：" + ResultCode.SUCCESS.getMsg());
-
-    // 使用2：拿错误码
-    System.out.println("\n状态码：" + ResultCode.PARAM_ERROR.getCode());
-    System.out.println("提示信息：" + ResultCode.PARAM_ERROR.getMsg());
-
-    // 遍历所有返回码
-    System.out.println("\n全局所有返回码列表：");
-    for (ResultCode code : ResultCode.values()) {
-        System.out.println(code.getCode() + " -&gt; " + code.getMsg());
-    }
-}
 </code></pre>
-<p>}`</p></div>
+<pre class="notranslate"><code class="notranslate">// 测试 main 方法
+ public static void main(String[] args) {
+     // 使用1：直接拿成功码
+     System.out.println("状态码：" + ResultCode.SUCCESS.getCode());
+     System.out.println("提示信息：" + ResultCode.SUCCESS.getMsg());
+
+     // 使用2：拿错误码
+     System.out.println("\n状态码：" + ResultCode.PARAM_ERROR.getCode());
+     System.out.println("提示信息：" + ResultCode.PARAM_ERROR.getMsg());
+
+     // 遍历所有返回码
+     System.out.println("\n全局所有返回码列表：");
+     for (ResultCode code : ResultCode.values()) {
+         System.out.println(code.getCode() + " -&gt; " + code.getMsg());
+     }
+ }
+}`
+
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
