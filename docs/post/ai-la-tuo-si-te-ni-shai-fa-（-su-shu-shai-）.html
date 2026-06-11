@@ -102,81 +102,78 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 暴力写几句就能搞定，用筛法反而多写代码、多余。<br>
 3.内存极其受限<br>
 筛法要开一个布尔数组占内存，如果环境不能开数组，就不能用。<br>
-代码：<br>
-import java.util.ArrayList;<br>
-import java.util.Arrays;<br>
-import java.util.List;</p>
-<p>/**</p>
-<ul>
-<li>
-<p>埃拉托斯特尼筛法求素数（带执行时间统计）<br>
-*/<br>
-public class PrimeSieve {</p>
-<p>/**</p>
-<ul>
-<li>
-<p>筛选所有 ≤ n 的素数</p>
-</li>
-<li>
-<p>@param n 上限</p>
-</li>
-<li>
-<p><a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/return/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/return">@return</a> 素数列表<br>
-*/<br>
-public static List sieve(int n) {<br>
-if (n &lt; 2) {<br>
-throw new IllegalArgumentException("n 必须大于等于 2");<br>
-}</p>
-<p>// 1. 初始化：默认所有数都是素数<br>
-boolean[] isPrime = new boolean[n + 1];<br>
-Arrays.fill(isPrime, true);<br>
-isPrime[0] = false;<br>
-isPrime[1] = false;</p>
-<p>// 2. 标记非素数：只需循环到 sqrt(n)<br>
-for (int i = 2; i * i &lt;= n; i++) {<br>
-if (isPrime[i]) {<br>
-// 从 i*i 开始标记（前面的倍数已被更小的数标记过）<br>
-for (int j = i * i; j &lt;= n; j += i) {<br>
-isPrime[j] = false;<br>
-}<br>
-}<br>
-}</p>
-<p>// 3. 收集结果<br>
-List primes = new ArrayList&lt;&gt;();<br>
-for (int i = 2; i &lt;= n; i++) {<br>
-if (isPrime[i]) {<br>
-primes.add(i);<br>
-}<br>
-}<br>
-return primes;<br>
-}</p>
-</li>
-</ul>
-<p>public static void main(String[] args) {<br>
-// 你想测试多大范围，改这里就行<br>
-int max = 100000000; // 试100万、1000万都可以</p>
-<pre class="notranslate"><code class="notranslate"> // ===== 计时开始 =====
- long start = System.currentTimeMillis();
+代码：</p>
+<pre class="notranslate"><code class="notranslate">import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
- // 执行筛法
- List&lt;Integer&gt; primes = sieve(max);
+/**
+ * 埃拉托斯特尼筛法求素数（带执行时间统计）
+ */
+public class PrimeSieve {
 
- // ===== 计时结束 =====
- long end = System.currentTimeMillis();
+    /**
+     * 筛选所有 ≤ n 的素数
+     * @param n 上限
+     * @return 素数列表
+     */
+    public static List&lt;Integer&gt; sieve(int n) {
+        if (n &lt; 2) {
+            throw new IllegalArgumentException("n 必须大于等于 2");
+        }
 
- System.out.println("≤ " + max + " 的素数总数：" + primes.size() + " 个");
- System.out.println("代码执行耗时：" + (end - start) + " 毫秒");
+        // 1. 初始化：默认所有数都是素数
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = false;
+        isPrime[1] = false;
 
- // 数字小的时候才打印列表，大了就别打印，不然打印很慢影响时间
- if (max &lt;= 100000) {
-     System.out.println("素数列表：");
-     System.out.println(primes);
- }
-</code></pre>
-<p>}<br>
-}</p>
-</li>
-</ul></div>
+        // 2. 标记非素数：只需循环到 sqrt(n)
+        for (int i = 2; i * i &lt;= n; i++) {
+            if (isPrime[i]) {
+                // 从 i*i 开始标记（前面的倍数已被更小的数标记过）
+                for (int j = i * i; j &lt;= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        // 3. 收集结果
+        List&lt;Integer&gt; primes = new ArrayList&lt;&gt;();
+        for (int i = 2; i &lt;= n; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+        return primes;
+    }
+
+    public static void main(String[] args) {
+        // 你想测试多大范围，改这里就行
+        int max = 100000000; // 试100万、1000万都可以
+
+        // ===== 计时开始 =====
+        long start = System.currentTimeMillis();
+
+        // 执行筛法
+        List&lt;Integer&gt; primes = sieve(max);
+
+        // ===== 计时结束 =====
+        long end = System.currentTimeMillis();
+
+        System.out.println("≤ " + max + " 的素数总数：" + primes.size() + " 个");
+        System.out.println("代码执行耗时：" + (end - start) + " 毫秒");
+
+        // 数字小的时候才打印列表，大了就别打印，不然打印很慢影响时间
+        if (max &lt;= 100000) {
+            System.out.println("素数列表：");
+            System.out.println(primes);
+        }
+    }
+}
+
+
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
