@@ -1,7 +1,8 @@
 ### 一、文本文件复制（字符缓冲流实现）
 字符缓冲流（BufferedReader / BufferedWriter）是文本文件复制最常用的方式，它自带缓冲区，效率高，还支持按行读写，非常方便。
 
-```import java.io.BufferedReader;
+```
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -42,7 +43,10 @@ public class TextFileCopy {
             }
         }
     }
-}```
+}
+
+
+```
 
 
 
@@ -55,7 +59,8 @@ BufferedWriter.newLine()：写入系统默认换行符，保证跨平台文件�
 字节缓冲流（BufferedInputStream / BufferedOutputStream）是 “万能复制” 方式，支持文本、图片、视频、压缩包等所有类型的文件，原理是按字节读写数据。
 完整代码
 
-```import java.io.BufferedInputStream;
+```
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -97,7 +102,10 @@ public class AnyFileCopy {
             }
         }
     }
-}```
+}
+
+
+```
 
 原理说明
 字节流（InputStream/OutputStream）直接操作文件的原始字节，不关心文件格式，所以能复制任意文件。
@@ -132,7 +140,9 @@ read(buffer) 会把数据读到缓冲区数组里，返回值是实际读取的�
 
 补充：try-with-resources 简化版代码（可选）
 
-```// 字符缓冲流简化版
+```
+
+// 字符缓冲流简化版
 public class TextFileCopyTry {
     public static void main(String[] args) {
         try (BufferedReader br = new BufferedReader(new FileReader("source.txt"));
@@ -148,4 +158,6 @@ public class TextFileCopyTry {
             e.printStackTrace();
         }
     }
-}```
+}
+
+```
